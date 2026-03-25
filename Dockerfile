@@ -1,4 +1,4 @@
-FROM rocker/shiny:4.3.1
+FROM rocker/r-ver:4.3.1
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -20,11 +20,13 @@ RUN R -e "options(repos = c(CRAN = 'https://packagemanager.posit.co/cran/__linux
     'DT' \
 ))"
 
-# Create app directory
+# Create app directory and set permissions for HF Spaces (runs as uid 1000)
+RUN useradd -m -u 1000 appuser
 WORKDIR /app
-
-# Copy app file
 COPY app.R .
+RUN chown -R appuser:appuser /app
+
+USER appuser
 
 # Expose port for Hugging Face Spaces
 EXPOSE 7860
