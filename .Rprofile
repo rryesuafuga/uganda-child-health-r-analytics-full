@@ -1,7 +1,7 @@
 # .Rprofile - Ensure required packages are available
 
-# Set CRAN repository
-options(repos = c(CRAN = "https://cloud.r-project.org/"))
+# Use Posit Package Manager for pre-compiled binaries
+options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/jammy/latest"))
 
 # Function to check and install packages
 check_and_install <- function(pkg) {
@@ -10,18 +10,15 @@ check_and_install <- function(pkg) {
   }
 }
 
-# List of required packages
+# List of required packages (matches app.R)
 required_packages <- c(
   "shiny",
   "shinydashboard",
+  "shinyjs",
+  "shinycssloaders",
   "plotly",
-  "tidyverse",
-  "DT",
-  "randomForest",
-  "glmnet",
-  "MatchIt",
-  "broom",
-  "viridis"
+  "dplyr",
+  "DT"
 )
 
 # Check and install each package

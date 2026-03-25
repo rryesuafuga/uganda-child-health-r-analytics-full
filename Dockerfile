@@ -8,8 +8,9 @@ RUN apt-get update && apt-get install -y \
     libv8-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install R packages
-RUN R -e "install.packages(c( \
+# Use Posit Package Manager for pre-compiled Linux binaries (no compilation needed)
+RUN R -e "options(repos = c(CRAN = 'https://packagemanager.posit.co/cran/__linux__/jammy/latest')); \
+    install.packages(c( \
     'shiny', \
     'shinydashboard', \
     'shinyjs', \
@@ -17,7 +18,7 @@ RUN R -e "install.packages(c( \
     'plotly', \
     'dplyr', \
     'DT' \
-), repos='https://cloud.r-project.org/')"
+))"
 
 # Create app directory
 WORKDIR /app
@@ -25,7 +26,7 @@ WORKDIR /app
 # Copy app file
 COPY app.R .
 
-# Expose port
+# Expose port for Hugging Face Spaces
 EXPOSE 7860
 
 # Run the app

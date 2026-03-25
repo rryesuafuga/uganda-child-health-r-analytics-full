@@ -621,10 +621,9 @@ server <- function(input, output, session) {
     js$createNetworkViz(id = "network-viz", data = network_data)
   })
   
-  # Initialize network on load
+  # Initialize network on load (once)
   observe({
-    invalidateLater(1000, session)
-    js$createNetworkViz(id = "network-viz", 
+    js$createNetworkViz(id = "network-viz",
                        data = list(
                          nodes = data.frame(
                            id = 0:4,
